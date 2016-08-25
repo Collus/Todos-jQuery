@@ -5,26 +5,13 @@ $(document).ready(function () {
 							var val=$('.hdrinput').val();
 							if(val){
 								addTodos();
-								//$Lis=$('li');//将新添加的li复制给数组Lis；
-								addMouseEvent();
 								$('.hdrinput').val('');
+								addMouseEvent();
 							}
 						}
 			})
-	})
-	//添加li的鼠标事件
-	function addMouseEvent() {
-		$('li').each(function(index, el) {
-			$('li').mouseover(function() {				
-				console.log('mouseover success');
-				var $img = $('li');
-				console.log($img);
-			});
-			$('li').mouseout(function() {
-				console.log('mouseout success');				
-			});
-		});
-	}
+
+	});
 	//添加新项目，并判断是否为第一次添加
 	var Linum = 0;
 	function addTodos() {
@@ -38,8 +25,9 @@ $(document).ready(function () {
 		}
 	}
 	//*添加新的项目
+
 	function addTodoBody() {
-		var $newLi = $("<li><input class='chkbox' type='checkbox'></li>");
+		var $newLi = $("<li><input class='chkbox' type='checkbox' ></li>");
 		var $newSpan = $("<span></span>");
 		var	$newimg = $("<img class='del' src='images/del.png'>")
 		$newSpan.html($('.hdrinput').val());
@@ -48,6 +36,35 @@ $(document).ready(function () {
 		$newimg.appendTo($newLi);
 		Linum++;	
 	}
+
+	//添加li的鼠标移动事件，以及元素删除
+	function addMouseEvent() {
+		$('li').each(function(index) {
+			$(this).mouseover(function () {
+				$(this).children('img').addClass('del1');
+				$(this).children('img').click(function () {
+					$(this).parent().remove();
+				});
+			})
+			$(this).mouseout(function () {
+				$(this).children('img').removeClass('del1');
+			})
+		});
+	}
+	//*判断项目是否被选中
+	function todoChecked() {
+		$('.chkbox').each(function (index) {
+			// if ($(this).children('input').prop('checked')) {
+
+			// 	$(this).children('span').css({'text-decoration':'line-through','color':'#ccc'});
+			// }
+			if ($(this).prop('checked')) {
+				console.log('checked');
+				$(this).next().css({'text-decoration':'line-through','color':'#ccc'});
+			}
+		});		
+		} 
+	
 
 
 })
