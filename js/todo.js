@@ -7,13 +7,17 @@ $(document).ready(function () {
 								addTodos();
 								$('.hdrinput').val('');
 								addMouseEvent();
+								delTodos();
+								todoChecked();
 							}
 						}
 			})
 
 	});
+
 	//添加新项目，并判断是否为第一次添加
 	var Linum = 0;
+	var Checked = 0;
 	function addTodos() {
 		if(Linum){
 			addTodoBody();
@@ -42,27 +46,45 @@ $(document).ready(function () {
 		$('li').each(function(index) {
 			$(this).mouseover(function () {
 				$(this).children('img').addClass('del1');
-				$(this).children('img').click(function () {
-					$(this).parent().remove();
-				});
+				// $(this).children('img').click(function () {
+				// 	$(this).parent().remove();
+				// });
 			})
 			$(this).mouseout(function () {
 				$(this).children('img').removeClass('del1');
 			})
 		});
 	}
+	//删除项目。
+	function delTodos() {
+		$('li').each(function (index) {
+			$(this).children('img').click(function () {
+				Linum--;
+				$(this).parent().remove();
+				console.log(Linum);
+			})
+		})
+	}
 	//*判断项目是否被选中
-	function todoChecked() {
-		$('.chkbox').each(function (index) {
-			// if ($(this).children('input').prop('checked')) {
-
-			// 	$(this).children('span').css({'text-decoration':'line-through','color':'#ccc'});
-			// }
-			if ($(this).prop('checked')) {
-				console.log('checked');
-				$(this).next().css({'text-decoration':'line-through','color':'#ccc'});
-			}
-		});		
+	function todoChecked() {		
+		// $('.chkbox').each(function (index) {
+		// 	$('.chkbox').click(function(){
+		// 		if ($(this).prop('checked')){ 
+		// 			$('.unchecked').html(Checked++);console.log(Checked);
+		// 			$(this).next().css({'text-decoration':'line-through','color':'#ccc'});
+		// 		}else{
+		// 			$(this).next().removeAttr('style');					
+		// 		}
+		// 	})
+		// })
+			$('.chkbox').click(function(){
+				if ($(this).prop('checked')) {
+					$('.unchecked').html(Checked++);console.log(Checked);
+					$(this).next().css({'text-decoration':'line-through','color':'#ccc'});
+				} else {
+					$(this).next().removeAttr('style');	
+				}
+			})
 		} 
 	
 
