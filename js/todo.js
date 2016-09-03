@@ -12,12 +12,10 @@ $(document).ready(function () {
 							}
 						}
 			})
-
 	});
-
 	//添加新项目，并判断是否为第一次添加
-	var Linum = 0;
-	var Checked = 0;
+	var Linum = 0;//统计添加的item
+	var Checked = 0;//统计选中的item
 	function addTodos() {
 		if(Linum){
 			addTodoBody();
@@ -32,15 +30,14 @@ $(document).ready(function () {
 
 	function addTodoBody() {
 		var $newLi = $("<li><input class='chkbox' type='checkbox' ></li>");
-		var $newSpan = $("<span></span>");
+		var $newSpan = $("<span class=''></span>");
 		var	$newimg = $("<img class='del' src='images/del.png'>")
 		$newSpan.html($('.hdrinput').val());
-		$('.content').append($newLi);
+		$('.itemList').append($newLi);
 		$newSpan.appendTo($newLi);
 		$newimg.appendTo($newLi);
 		Linum++;	
 	}
-
 	//添加li的鼠标移动事件，以及元素删除
 	function addMouseEvent() {
 		$('li').each(function(index) {
@@ -56,37 +53,40 @@ $(document).ready(function () {
 		});
 	}
 	//删除项目。
+	// function delTodos() {
+	// 	$('li').each(function (index) {
+	// 		$(this).children('img').click(function () {
+	// 			Linum--;console.log(Linum);
+	// 			$(this).parent().remove();
+	// 		})
+	// 	})
+	// }
 	function delTodos() {
-		$('li').each(function (index) {
-			$(this).children('img').click(function () {
-				Linum--;
-				$(this).parent().remove();
-				console.log(Linum);
-			})
-		})
+		$('.del').click(function() {
+			$(this).parent().remove();
+			console.log(Linum);
+		});
 	}
 	//*判断项目是否被选中
 	function todoChecked() {		
-		// $('.chkbox').each(function (index) {
-		// 	$('.chkbox').click(function(){
-		// 		if ($(this).prop('checked')){ 
-		// 			$('.unchecked').html(Checked++);console.log(Checked);
-		// 			$(this).next().css({'text-decoration':'line-through','color':'#ccc'});
-		// 		}else{
-		// 			$(this).next().removeAttr('style');					
-		// 		}
-		// 	})
-		// })
+			console.log('chkbox: '+$('.chkbox').size());
 			$('.chkbox').click(function(){
 				if ($(this).prop('checked')) {
-					$('.unchecked').html(Checked++);console.log(Checked);
 					$(this).next().css({'text-decoration':'line-through','color':'#ccc'});
+					Checked = $(".chkbox[checked='true']").size();
+					console.log(Checked);
 				} else {
 					$(this).next().removeAttr('style');	
 				}
 			})
+			
 		} 
-	
+	//*统计Checked的条目数
+	// function countChecked() {
+	// 	Checked = 0;
+	// 	Checked = $(".chkbox[checked=true]").size();
+	// 	console.log(Checked);
+	// }
 
 
 })
